@@ -1,0 +1,11 @@
+name: "Sports Performance Analysis Network"
+output_dir: "."
+navbar:
+  title: "Welcome!"
+  left:
+    - text: "SPAN Home"
+      href: index.html
+    - text: "BitKat"
+      href: bitkat.html
+    - text: "About Me"
+      href: about.html
