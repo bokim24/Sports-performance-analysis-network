@@ -23,12 +23,12 @@ title: "BitKAT - Simple All-in-one solution that offers next generation talent a
 ## which site gives the data that seems the least difficult to work with for my purpose,
 ## and that was NBA.com.
 
-library(RJSONIO)
-library(jsonlite)
-library(rjson)
-library(RCurl)
-library(plyr)
-library(plotly)
+library(RJSONIO, warn.conflicts = FALSE)
+library(jsonlite, warn.conflicts = FALSE)
+library(rjson, warn.conflicts = FALSE)
+library(RCurl, warn.conflicts = FALSE)
+library(plyr, warn.conflicts = FALSE)
+library(plotly, warn.conflicts = FALSE)
 
 ## Kat only has three seasons. Suck me if u want me to write a loop to go thru to
 ## find all his "active years". If I end up doing this for more players, AKA this
