@@ -2,6 +2,8 @@
 title: "BitKAT - Simple All-in-one solution that offers next generation talent and skill"
 ---
 
+
+
 ```{r, echo = FALSE, fig.align='center'}
 
 ## don't think I actually need all these libraries, but I Can't get the script to run 
@@ -192,10 +194,10 @@ aggdata3$betterDates <- NULL
 aggdata3$game_number <- NULL
 aggdata3$Group.1 <- NULL
 
-katdata <- plot_ly(trialrun, x = ~game_number) %>%
-  add_lines(y = ~pts1718, name = "points1718") %>%
-  add_lines(y = ~rebs1617, name = "points1617") %>%
-  add_lines(y = ~rebs1516, name = "points1516") %>%
+katptyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
+  add_lines(y = ~pts1718, name = "points 17-18") %>%
+  add_lines(y = ~pts1617, name = "points 16-17") %>%
+  add_lines(y = ~pts1516, name = "points 15-16") %>%
   
   layout(
     title = "BitKat",
@@ -223,7 +225,89 @@ katdata <- plot_ly(trialrun, x = ~game_number) %>%
     
     yaxis = list(title = "Points"))
 
-katdata
+
+katptyrcomp
 
 ```
 
+The data above shows the offensive growth to his already massive potential during his three year tenure in the league. 
+Even with Butler taking over the Timbs with his leadership presence, which consequentially and directly affected KAT's fantasy value - or so as we thought, KAT's point totals definitely took a leap during the 17-18 year. I also think that this data conveniently shows us why many fans were left wanting more; the large spikes in his "average points by game" shows lack of consistency, perhaps the type of inconsistency that fantasy owners weren't expecting out of such premier talent. I'm a believer in that he will finally decide to man up and put the team on his back - or that maybe Butler will take a backseat to KAT since he's probably gone after next year anyway. One way or another, I do think he needs to show some more leadership and that IT factor that we're all looking for out of him, but so far, critics have reasured their stance in his immaturity and lack of poise during crunch time. 
+
+```{r, echo = FALSE, fig.align='center'}
+
+katrebyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
+  add_lines(y = ~rebs1718, name = "rebs 17-18") %>%
+  add_lines(y = ~rebs1617, name = "rebs 16-17") %>%
+  add_lines(y = ~rebs1516, name = "rebs 15-16") %>%
+  
+  layout(
+    title = "BitKat",
+    xaxis = list(
+      rangeselector = list(
+        buttons = list(
+          list(
+            count = 2,
+            label = "2 wk",
+            step = "week",
+            stepmode = "backward"),
+          list(
+            count = 1,
+            label = "1 mo",
+            step = "month",
+            stepmode = "backward"),
+          list(
+            count = 2,
+            label = "2 mo",
+            step = "month",
+            stepmode = "backward"),
+          list(step = "all"))),
+      
+      rangeslider = list(type = "game #")),
+    
+    yaxis = list(title = "Rebounds"))
+
+
+katrebyrcomp
+
+```
+
+The above and Below show Rebounds and Assists respectively
+
+```{r, echo = FALSE, fig.align='center'}
+
+katastyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
+  add_lines(y = ~asts1718, name = "asts 17-18") %>%
+  add_lines(y = ~asts1617, name = "asts 16-17") %>%
+  add_lines(y = ~asts1516, name = "asts 15-16") %>%
+  
+  layout(
+    title = "BitKat",
+    xaxis = list(
+      rangeselector = list(
+        buttons = list(
+          list(
+            count = 2,
+            label = "2 wk",
+            step = "week",
+            stepmode = "backward"),
+          list(
+            count = 1,
+            label = "1 mo",
+            step = "month",
+            stepmode = "backward"),
+          list(
+            count = 2,
+            label = "2 mo",
+            step = "month",
+            stepmode = "backward"),
+          list(step = "all"))),
+      
+      rangeslider = list(type = "game #")),
+    
+    yaxis = list(title = "Assists"))
+
+
+katastyrcomp
+
+
+```
