@@ -180,15 +180,15 @@ aggdata1$betterDates <- NULL
 aggdata1$game_number <- NULL
 aggdata1$Group.1 <- NULL
 
-savefreq2 <- count(fantasydf1718, "fantasyweek2")
-aggdata2 <-aggregate(fantasydf1718, by=list(fantasyweek2), FUN=mean, na.rm=TRUE)
+savefreq2 <- count(fantasydf1617, "fantasyweek2")
+aggdata2 <-aggregate(fantasydf1617, by=list(fantasyweek2), FUN=mean, na.rm=TRUE)
 aggdata2$number_of_games <- savefreq2$freq
 aggdata2$betterDates <- NULL
 aggdata2$game_number <- NULL
 aggdata2$Group.1 <- NULL
 
-savefreq3 <- count(fantasydf1718, "fantasyweek3")
-aggdata3 <-aggregate(fantasydf1718, by=list(fantasyweek3), FUN=mean, na.rm=TRUE)
+savefreq3 <- count(fantasydf1516, "fantasyweek3")
+aggdata3 <-aggregate(fantasydf1516, by=list(fantasyweek3), FUN=mean, na.rm=TRUE)
 aggdata3$number_of_games <- savefreq3$freq
 aggdata3$betterDates <- NULL
 aggdata3$game_number <- NULL
