@@ -230,8 +230,7 @@ katptyrcomp
 
 ```
 
-The data above shows the offensive growth to his already massive potential during his three year tenure in the league. 
-Even with Butler taking over the Timbs with his leadership presence, which consequentially and directly affected KAT's fantasy value - or so as we thought, KAT's point totals definitely took a leap during the 17-18 year. I also think that this data conveniently shows us why many fans were left wanting more; the large spikes in his "average points by game" shows lack of consistency, perhaps the type of inconsistency that fantasy owners weren't expecting out of such premier talent. I'm a believer in that he will finally decide to man up and put the team on his back - or that maybe Butler will take a backseat to KAT since he's probably gone after next year anyway. One way or another, I do think he needs to show some more leadership and that IT factor that we're all looking for out of him, but so far, critics have reasured their stance in his immaturity and lack of poise during crunch time. 
+
 
 ```{r, echo = FALSE, fig.align='center'}
 
