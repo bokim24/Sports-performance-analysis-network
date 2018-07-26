@@ -115,10 +115,10 @@ numgameweek1 <- as.numeric(gameweek1)
 fantasyweek1 <- ifelse(numgameweek1>41, numgameweek1 - 41, numgameweek1 + 11)
 
 numgameweek2 <- as.numeric(gameweek2)
-fantasyweek2 <- ifelse(numgameweek2>41, numgameweek2 - 41, numgameweek2 + 11)
+fantasyweek2 <- ifelse(numgameweek2>42, numgameweek2 - 42, numgameweek2 + 12)
 
 numgameweek3 <- as.numeric(gameweek3)
-fantasyweek3 <- ifelse(numgameweek3>41, numgameweek3 - 41, numgameweek3 + 11)
+fantasyweek3 <- ifelse(numgameweek3>43, numgameweek3 - 43, numgameweek3 + 13)
 
 game_number <- c(1:82)
 
