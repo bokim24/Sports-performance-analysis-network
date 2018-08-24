@@ -38,19 +38,19 @@ library(plotly, warn.conflicts = FALSE)
 
 ## first we get the url
 
-kat1718url <- "https://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo
+kat1718url <- "http://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo
 =&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month
 =0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period
 =0&PlayerID=1626157&PlusMinus=N&Rank=N&Season=2017-18&SeasonSegment=&SeasonType
 =Regular+Season&ShotClockRange=&VsConference=&VsDivision="
 
-kat1617url <- "https://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo
+kat1617url <- "http://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo
 =&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month
 =0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period
 =0&PlayerID=1626157&PlusMinus=N&Rank=N&Season=2016-17&SeasonSegment=&SeasonType
 =Regular+Season&ShotClockRange=&VsConference=&VsDivision="
 
-kat1516url <- "https://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo
+kat1516url <- "http://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo
 =&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month
 =0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period
 =0&PlayerID=1626157&PlusMinus=N&Rank=N&Season=2015-16&SeasonSegment=&SeasonType

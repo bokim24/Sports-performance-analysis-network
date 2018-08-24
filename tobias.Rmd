@@ -1,0 +1,275 @@
+---
+title: "Tobias Harris"
+---
+
+```{r, echo = FALSE, fig.align='center'}
+
+
+library(RJSONIO)
+library(jsonlite)
+library(rjson)
+library(RCurl)
+library(plyr)
+library(plotly)
+library(dplyr)
+library(lubridate)
+
+
+flip <- function(data) {
+  new <- data[rev(rownames(data)), ]
+  rownames(new) <- NULL
+  new
+}
+
+szndisplay <- c("1718", "1617", "1516", "1415", "1314",
+                "1213", "1112", "1011", "0910", "0809",
+                "0708", "0607", "0506", "0405", "0304",
+                "0203", "0102", "0001", "9900", "9899",
+                "9798", "9697")
+
+getyrs7 <- c("2017-18", "2016-17", "2015-16", "2014-15", "2013-14",
+            "2012-13", "2011-12")
+
+getyrs <- c("2017-18", "2016-17", "2015-16", "2014-15", "2013-14",
+            "2012-13", "2011-12", "2010-11", "2009-10", "2008-09",
+            "2007-08", "2006-07", "2005-06", "2004-05", "2003-04",
+            "2002-03", "2001-02", "2000-01", "1999-00", "1998-99",
+            "1997-98", "1996-97")
+
+parsebysznTHf <- paste0("http://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo",
+                      "=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType",
+                      "=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust",
+                      "=N&PerMode=Totals&Period=0&PlayerID=202699&PlusMinus",
+                      "=N&Rank=N&Season=")
+
+parsebysznl <- paste0("&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange",
+                      "=&VsConference=&VsDivision=")
+
+listofdfsTH <- list()
+
+
+for(i in 1:7){
+  jsonconvTH <- fromJSON(paste(readLines(paste0(parsebysznTHf, getyrs7[i], parsebysznl), warn = FALSE), collapse = ""))
+  if(!length(jsonconvTH[["resultSets"]][[1]][["rowSet"]]) == 0){
+    listofdfsTH[[i]] <- as.data.frame(do.call("rbind", jsonconvTH[["resultSets"]][[1]][["rowSet"]]))
+    categories <- c(jsonconvTH[["resultSets"]][[1]][["headers"]])
+    names(listofdfsTH[[i]]) <- c(categories)
+    
+  }
+}
+## double pat on the back for me, the for loop works for I.T. so far, showing 7 seasons played.
+## with unlisted values, we can just use rev() instead of our flip function
+
+
+for(i in seq_along(listofdfsTH)){
+  for(j in seq_along(listofdfsTH[[1]])){
+    listofdfsTH[[i]][[j]] <-  as.character(rev(unlist(listofdfsTH[[i]][[j]])))
+  }
+}
+
+## Tobias played for two different teams in the 17-18 seasons, detroit and LA. lets see if we 
+## can ask R to find this out for us
+
+
+for(i in seq_along(listofdfsTH)){
+  teamids <- unique(listofdfsTH[[i]][[4]])
+  teamnames <- unique(listofdfsTH[[i]][[5]])
+  parsebyteamidf <- paste0("http://stats.nba.com/stats/teamgamelogs?DateFrom=&DateTo",
+                           "=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType",
+                           "=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust",
+                           "=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season=")
+  parsebyteamidm <- paste0("&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&TeamID=")
+  parsebyteamidl <- paste0("&VsConference=&VsDivision=")
+  if(!length(unique(teamids)) == 1){
+    for(j in seq_along(teamids)){
+      jsonconvteamsTH <- fromJSON(paste0(readLines(paste0(parsebyteamidf, getyrs[i], parsebyteamidm, teamids[j], parsebyteamidl), warn = FALSE)))
+      assign(paste0("TH", i,".",j), flip(as.data.frame(do.call("rbind", jsonconvteamsTH[["resultSets"]][[1]][["rowSet"]]))))
+      
+    }
+  }else{
+    jsonconvteamsTH <- fromJSON(paste0(readLines(paste0(parsebyteamidf, getyrs[i], parsebyteamidm, teamids , parsebyteamidl), warn = FALSE)))
+    assign(paste0("TH", i,".",1), flip(as.data.frame(do.call("rbind", jsonconvteamsTH[["resultSets"]][[1]][["rowSet"]]))))
+    
+  }
+}
+
+categoriestm <- c(jsonconvteamsTH[["resultSets"]][[1]][["headers"]])
+
+## manually making the list of dataframes to unlist them as before using the unlist for loop
+
+listofteamdfsTH <- list(TH1.1, TH1.2, TH2.1, TH3.1, TH3.2, TH4.1, TH5.1, TH6.1, TH6.2, TH7.1)
+
+
+for(i in seq_along(listofteamdfsTH)){
+  for(j in seq_along(listofteamdfsTH[[1]])){
+    listofteamdfsTH[[i]][[j]] <-  as.character(unlist(listofteamdfsTH[[i]][[j]]))
+  }
+  names(listofteamdfsTH[[i]]) <- c(categoriestm)
+  assign(paste0("TOBY", i), listofteamdfsTH[[i]])
+}
+
+
+for(i in 1:7){
+  assign(paste0("THszn",i), as.data.frame(listofdfsTH[[i]]))
+}
+
+## Everything unlisted (sortable), and nicely iterated, but first we'll find the process it takes to make the full career gamelog
+
+
+## 2017-18 szn
+toby1718.1 <- TOBY1[c(1:50),c(1,5:7)]
+
+toby1718.2 <- TOBY2[c(51:82),c(1,5:7)]
+
+
+toby1718 <- rbind(toby1718.1, toby1718.2)
+
+toby1718$GAME_NUMBER <- c(1:82)
+
+THszn1$GAME_PLAYED <- c(1:80)
+
+thgamelog1718 <- merge(THszn1, toby1718, by.x = 7, by.y = 2, all.x = TRUE, all.y = TRUE)
+
+## 2016-17 szn
+toby1617 <- TOBY3[c(1:82),c(1,5:7)]
+
+toby1617$GAME_NUMBER <- c(1:82)
+
+THszn2$GAME_PLAYED <- c(1:82)
+
+thgamelog1617 <- merge(THszn2, toby1617, by.x = 7, by.y = 2, all.x = TRUE, all.y = TRUE)
+
+
+## 2015-16 szn
+
+toby1516.1 <- TOBY4[c(1:54),c(1,5:7)]
+
+toby1516.2 <- TOBY5[c(55:82),c(1,5:7)]
+
+
+toby1516 <- rbind(toby1516.1, toby1516.2)
+
+toby1516$GAME_NUMBER <- c(1:82)
+
+THszn3$GAME_PLAYED <- c(1:76)
+
+thgamelog1516 <- merge(THszn3, toby1516, by.x = 7, by.y = 2, all.x = TRUE, all.y = TRUE)
+
+
+## 2014-15 szn
+toby1415 <- TOBY6[c(1:82),c(1,5:7)]
+
+toby1415$GAME_NUMBER <- c(1:82)
+
+THszn4$GAME_PLAYED <- c(1:68)
+
+thgamelog1415 <- merge(THszn4, toby1415, by.x = 7, by.y = 2, all.x = TRUE, all.y = TRUE)
+
+
+## 2013-14 szn
+toby1314 <- TOBY7[c(1:82),c(1,5:7)]
+
+toby1314$GAME_NUMBER <- c(1:82)
+
+THszn5$GAME_PLAYED <- c(1:61)
+
+thgamelog1314 <- merge(THszn5, toby1314, by.x = 7, by.y = 2, all.x = TRUE, all.y = TRUE)
+
+
+## 2012-13 szn
+
+
+toby1213.1 <- TOBY8[c(1:55),c(1,5:7)]
+
+toby1213.2 <- TOBY9[c(56:82),c(1,5:7)]
+
+
+toby1213 <- rbind(toby1213.1, toby1213.2)
+
+toby1213$GAME_NUMBER <- c(1:82)
+
+THszn6$GAME_PLAYED <- c(1:55)
+
+thgamelog1213 <- merge(THszn6, toby1213, by.x = 7, by.y = 2, all.x = TRUE, all.y = TRUE)
+
+
+
+## 2011-12 szn
+toby1112 <- TOBY10[c(1:66),c(1,5:7)]
+
+toby1112$GAME_NUMBER <- c(1:66)
+
+THszn7$GAME_PLAYED <- c(1:42)
+
+thgamelog1112 <- merge(THszn7, toby1112, by.x = 7, by.y = 2, all.x = TRUE, all.y = TRUE)
+
+
+thgamelog1718$SEASON_DISPLAY <- as.numeric("2018")
+thgamelog1617$SEASON_DISPLAY <- as.numeric("2017")
+thgamelog1516$SEASON_DISPLAY <- as.numeric("2016")
+thgamelog1415$SEASON_DISPLAY <- as.numeric("2015")
+thgamelog1314$SEASON_DISPLAY <- as.numeric("2014")
+thgamelog1213$SEASON_DISPLAY <- as.numeric("2013")
+thgamelog1112$SEASON_DISPLAY <- as.numeric("2012")
+## So to explain what I did just now, i have to explain what the issue is, of depending each
+## player to an 82 game season. Toby has three mid season trades, and it gets ugly when trying 
+## to combine two different dataframes representing two different teams' schedules. For instance,
+## the LA clippers may have acquired Tobias before they play their 50th game, but at the time
+## of this acquisition, Tobias may have already played 52 games with the Detroit Pistons. This
+## is a drastic example, and thankfully, there's a gap of inactive dates large enough so that we 
+## can say that Tobias missed two games between his last appearance with the Pistons on Jan. 29, 2018 and his
+## first appearance with the clippers on Feb. 03, 2018. This is simply for fantasy purposes, so we can know
+## exactly how many games he misses in the regular season and when he misses those games.
+
+## So the mid season trades is exactly what spurred me to rbind then merge as I did for Tobias's three mid season trades.
+
+## Unlisting the dataframes is a must for the process I've used, since it is necessary for keeping order in tact
+
+thcareerlog <- rbind(thgamelog1718, thgamelog1617, thgamelog1516, thgamelog1415, thgamelog1314, thgamelog1213, thgamelog1112)
+
+thcareerlognum <- thcareerlog[c(1:558), c(1, 11:65, 69:70)]
+
+for (i in seq_along(thcareerlognum)){
+  thcareerlognum[[i]] <- as.numeric(unlist(thcareerlognum[[i]]))
+}
+  
+
+th <- group_by(thcareerlognum, SEASON_DISPLAY)
+
+## I'm at a loss for words... I've tried everything, but I just can't seem to figure out how to disconnect the graph at "NA" points...
+## I.E. Toby missed his 49th and 50th games in 2017-2018 season and played all others. I want the graph to disconnect after the 48th game
+## and restart from the 51st game, but nothing that I do works, unless I disconnect all of them, or none of them....
+
+## I've come to conclude that I'm going to zero out these missed games, because in all fairness, in this world of fantasy that we live in,
+
+## every missed game, whether due to injury, family tragedy, sheer incompentence or selfishness, is simply a fatty donut for the owners.
+
+
+## this leaves a tricky situation for the 2011-2012 season, which is shortened to 66 games due to the players going on strike.
+## as per Wiki, "With the new deal in place, the regular season was shortened from the normal 82 games per team to 66, 
+## because of nearly two months of inactivity. The season began on December 25, 2011, and ended on April 26, 2012".
+
+## It might matter which month of the year the season began, like all things being equal, kyle korver might start off hot much more quickly
+## if, for example, the season began in January, rather than November. I have no idea why this would be, and this might be a topic for another time,
+## but in reality, when the season gets going, the season gets going. Games are going to be tough for the players, and so rust is expected at season
+## start with slumps here and there until they acclimate to the season schedule and are in the mid-season form that they seek to be. Thus, We'll still keep our
+## original format of having the first game be #1, rather than Oct. 30, Dec. 25, etc..
+
+## So lets zero out "NA"s.
+
+th[is.na(th)] <- 0
+
+## I think Season.Year column is fuckin everything up..
+
+## We'e gonna use intervals on lubridate to capture the format '(4-digit year)-(4-digit year the next)'
+
+yearlycomp <- plot_ly(th, x = ~GAME_NUMBER, frame = ~SEASON_DISPLAY) %>%
+  add_lines(y = ~PTS)
+
+yearlycomp
+
+
+
+
+
+```

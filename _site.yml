@@ -9,3 +9,5 @@ navbar:
       href: bitkat.html
     - text: "About Me"
       href: about.html
+    - text: "TOBY"
+      href: tobias.html
