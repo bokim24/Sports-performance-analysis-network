@@ -5,9 +5,12 @@ navbar:
   left:
     - text: "SPAN Home"
       href: index.html
-    - text: "BitKat"
-      href: bitkat.html
     - text: "About Me"
       href: about.html
-    - text: "TOBY"
-      href: tobias.html
+    - text: "Players"
+      menu:
+        - text: "TOBY"
+          href: tobias.html
+        - text: "BitKat"
+          href: bitkat.html
+        
