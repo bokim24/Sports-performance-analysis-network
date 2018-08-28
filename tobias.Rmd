@@ -2,9 +2,21 @@
 title: "Tobias Harris"
 ---
 
+<img src="http://imagesvc.timeincapp.com/v3/fan/image?url=https://thejnotes.com/wp-content/uploads/getty-images/2017/07/938987946.jpeg" style="width:25%; border:5px solid; margin-right: 23px" align="left">
 
-```{r, echo = FALSE, fig.align='center'}
+Tobias' careerlog was very interesting to look at. Not only did I have to account for the 66 game season from the 2011 lockout, but he also had 3 mid season trades! 
 
+Must have been tough to swap teams like that in the middle of the season all three times(the three transactions involving Tobias happened all around the same time of the year)..
+
+The whole formation of the code looks much different, and more advanced even (at least I like to think), than the ones I made for KAT, since I'm ultimately creating one large dataframe and using group by to make frame animamtions by year. 
+
+Big thing to note here is that the entire dataframe has to be in numerical format so that plotly can read it more fluidly and create better looking graphs.
+
+
+
+
+
+```{r, echo = FALSE, message = FALSE, fig.align = 'center'}
 
 library(RJSONIO, warn.conflicts = FALSE)
 library(jsonlite, warn.conflicts = FALSE)
@@ -13,8 +25,7 @@ library(RCurl, warn.conflicts = FALSE)
 library(plyr, warn.conflicts = FALSE)
 library(plotly, warn.conflicts = FALSE)
 library(dplyr, warn.conflicts = FALSE)
-
-
+library(knitr, warn.conflicts = FALSE)
 
 flip <- function(data) {
   new <- data[rev(rownames(data)), ]
@@ -38,28 +49,30 @@ getyrs <- c("2017-18", "2016-17", "2015-16", "2014-15", "2013-14",
             "1997-98", "1996-97")
 
 parsebysznTHf <- paste0("http://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo",
-                      "=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType",
-                      "=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust",
-                      "=N&PerMode=Totals&Period=0&PlayerID=202699&PlusMinus",
-                      "=N&Rank=N&Season=")
+                        "=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType",
+                        "=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust",
+                        "=N&PerMode=Totals&Period=0&PlayerID=202699&PlusMinus",
+                        "=N&Rank=N&Season=")
 
 parsebysznl <- paste0("&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange",
                       "=&VsConference=&VsDivision=")
+listofURLs <- list()
+
+for(i in 1:7){
+  listofURLs[[i]]<- paste0(parsebysznTHf, getyrs7[i], parsebysznl)
+}
+
 
 listofdfsTH <- list()
 
 
 for(i in 1:7){
-  jsonconvTH <- fromJSON(paste(readLines(paste0(parsebysznTHf, getyrs7[i], parsebysznl), warn = FALSE), collapse = ""))
-  if(!length(jsonconvTH[["resultSets"]][[1]][["rowSet"]]) == 0){
-    listofdfsTH[[i]] <- as.data.frame(do.call("rbind", jsonconvTH[["resultSets"]][[1]][["rowSet"]]))
-    categories <- c(jsonconvTH[["resultSets"]][[1]][["headers"]])
-    names(listofdfsTH[[i]]) <- c(categories)
-    
-  }
+  jsonconvTH <- fromJSON(paste0(readLines(listofURLs[[i]], warn = FALSE)))
+  listofdfsTH[[i]] <- as.data.frame(do.call("rbind", jsonconvTH[["resultSets"]][[1]][["rowSet"]]))
+  categories <- c(jsonconvTH[["resultSets"]][[1]][["headers"]])
+  names(listofdfsTH[[i]]) <- c(categories)
 }
-## double pat on the back for me, the for loop works for I.T. so far, showing 7 seasons played.
-## with unlisted values, we can just use rev() instead of our flip function
+
 
 
 for(i in seq_along(listofdfsTH)){
@@ -83,12 +96,12 @@ for(i in 1:7){
   parsebyteamidl <- paste0("&VsConference=&VsDivision=")
   if(!length(unique(teamids)) == 1){
     for(j in seq_along(teamids)){
-      jsonconvteamsTH <- fromJSON(paste0(readLines(paste0(parsebyteamidf, getyrs[i], parsebyteamidm, teamids[j], parsebyteamidl), warn = FALSE)))
+      jsonconvteamsTH <- fromJSON(paste0(readLines(paste0(parsebyteamidf, getyrs7[i], parsebyteamidm, teamids[j], parsebyteamidl), warn = FALSE)))
       assign(paste0("TH", i,".",j), flip(as.data.frame(do.call("rbind", jsonconvteamsTH[["resultSets"]][[1]][["rowSet"]]))))
       
     }
   }else{
-    jsonconvteamsTH <- fromJSON(paste0(readLines(paste0(parsebyteamidf, getyrs[i], parsebyteamidm, teamids , parsebyteamidl), warn = FALSE)))
+    jsonconvteamsTH <- fromJSON(paste0(readLines(paste0(parsebyteamidf, getyrs7[i], parsebyteamidm, teamids , parsebyteamidl), warn = FALSE)))
     assign(paste0("TH", i,".",1), flip(as.data.frame(do.call("rbind", jsonconvteamsTH[["resultSets"]][[1]][["rowSet"]]))))
     
   }
@@ -250,26 +263,10 @@ th$CAREER_GAMES <- c(1:558)
 careerview <- plot_ly(th, x = ~CAREER_GAMES, y = ~PTS, type='scatter', mode='lines')
 
 careerview
-```
-
-Tobias' careerlog was interesting enough that it made me have to utilize other workarounds like I did with midseason trades.
-
-The whole formation of the code looks much different, and more advanced even (at least I like to think), since I'm ultimately creating one large dataframe and using group by to make frame animamtions by year. Big thing to note here is that
-the entire dataframe has to be in numerical format so that plotly can read it more fluidly and create better looking graphs.
-
-```{r, echo = FALSE, fig.align='center'}
 
 
 yearlycomp
-
-
-
-
-
 ```
-
-
-
 
 
 
