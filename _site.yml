@@ -13,4 +13,5 @@ navbar:
           href: tobias.html
         - text: "BitKat"
           href: bitkat.html
-        
+        - text: "KOBE"
+          href: kobe.html  

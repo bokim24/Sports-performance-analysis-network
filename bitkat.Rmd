@@ -1,5 +1,6 @@
 ---
-title: "BitKAT - Simple All-in-one solution that offers next generation talent and skill"
+title: BitKAT - Simple All-in-one solution that offers next generation talent and
+  skill
 ---
 
 
@@ -29,6 +30,8 @@ library(rjson, warn.conflicts = FALSE)
 library(RCurl, warn.conflicts = FALSE)
 library(plyr, warn.conflicts = FALSE)
 library(plotly, warn.conflicts = FALSE)
+library(dplyr, warn.conflicts = FALSE)
+library(knitr, warn.conflicts = FALSE)
 
 ## Kat only has three seasons. Suck me if u want me to write a loop to go thru to
 ## find all his "active years". If I end up doing this for more players, AKA this
@@ -58,9 +61,9 @@ kat1516url <- "http://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo
 
 ## next we get the tables in the url via. fromJSON and make into simple dataframe
 
-kat1718json <- fromJSON(paste(readLines(kat1718url, warn = FALSE), collapse = ""))
-kat1617json <- fromJSON(paste(readLines(kat1617url, warn = FALSE), collapse = ""))
-kat1516json <- fromJSON(paste(readLines(kat1516url, warn = FALSE), collapse = ""))
+kat1718json <- fromJSON(paste0(readLines(kat1718url, warn = FALSE)))
+kat1617json <- fromJSON(paste0(readLines(kat1617url, warn = FALSE)))
+kat1516json <- fromJSON(paste0(readLines(kat1516url, warn = FALSE)))
 
 df1 <- as.data.frame(do.call("rbind", kat1718json[["resultSets"]][[1]][["rowSet"]]))
 df2 <- as.data.frame(do.call("rbind", kat1617json[["resultSets"]][[1]][["rowSet"]]))
@@ -209,11 +212,7 @@ katptyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
 
 katptyrcomp
 
-```
 
-
-
-```{r, echo = FALSE, fig.align='center'}
 
 katrebyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
   add_lines(y = ~rebs1718, name = "rebs 17-18") %>%
@@ -249,11 +248,8 @@ katrebyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
 
 katrebyrcomp
 
-```
+print("The above and below plots show KAT's rebounds and assists per game respectively")
 
-The above and Below show Rebounds and Assists respectively
-
-```{r, echo = FALSE, fig.align='center'}
 
 katastyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
   add_lines(y = ~asts1718, name = "asts 17-18") %>%
