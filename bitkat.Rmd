@@ -5,7 +5,7 @@ title: BitKAT - Simple All-in-one solution that offers next generation talent an
 
 
 
-```{r, echo = FALSE, fig.align='center'}
+```{r, echo = FALSE, message = FALSE, fig.align='center'}
 
 ## don't think I actually need all these libraries, but I Can't get the script to run 
 ## if I don't actually have all of them and all of them in this exact order... 

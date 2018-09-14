@@ -2,4 +2,18 @@
 title: "About Me"
 ---
 
-Henlo
+Hey!
+
+Thanks for visiting my page; I know it's pretty lame right now at the moment, but hopefully I can make it better along the way. 
+
+I also want to do a youtube page, but I haven't figured out what I want to focus my discussion around. We'll get to that soon. 
+
+For now, please enjoy some of the players that I have scripts for. 
+
+Hopefully, R doesn't crash on me as I add more players on, and what's even scarier is that hopefully, NBA.com doesn't block me out and deny permission to scrape...
+
+If you have any questions/thoughts/comments
+
+uhhhhh send me an email i guess. lol.
+
+nba.span.r@gmail.com
