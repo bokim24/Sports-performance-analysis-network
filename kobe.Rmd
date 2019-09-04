@@ -5,16 +5,14 @@ title: "A Laker's Story..."
 
 as per NBA.com advanced stats page, "Advanced Box Score Stats only go back to the 1996-97 Season"
 
-What a time... To be alive... xD
-
 This means that though I will not be looking at Michael Jordan's career, we still get juicy content with the
-likes of Allen Iverson, Ray Allen, Jermaine O'Neal, Steve Nash, Peja stojakovic, and even Stephon Marbury,
+likes of Allen Iverson, Ray Allen, Jermaine O'Neal, Steve Nash, and even Stephon Marbury,
 a talent loaded, high flyin, sharp shooting, 1996 draft class. 
 
 Oh, and did I mention Kobe Bryant? Here's me quoting wiki again, "Bill Branch, the Hornets' head scout at the time, said that the Hornets agreed to trade their draft selection at #13 to the Lakers the day before the draft. Prior to the trade agreement, the Hornets never considered drafting Bryant. During the draft, the Lakers told the Hornets whom to select minutes before the pick was made.[31] Bryant was the first guard ever drafted directly out of high school"
 
 Just wow. Not only was this man passed up by 13 other teams, he probably wasn't even considered a lottery talent by the other twelve teams that drafted before the Charlotte draft pick... Whatever the case, The Lakers had just acquired a Hall of Famer 
-who would soon lead them to five BIG BIG rings. What a time... To be alive...
+
 
 ```{r, echo = FALSE, message = FALSE, fig.align='center'}
 
