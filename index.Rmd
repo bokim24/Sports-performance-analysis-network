@@ -4,18 +4,18 @@ title: "Sports Performance Analysis Network"
 
 I believe that graphs can change the way we look at sports and player data.
 
-NBA players hate when we "blogboyz", as phrased perfectly by Kevin Durant, over-analyze players with bullshit like PER, Offensive Efficiency, Points Per Posession...
+NBA players hate when we "blogboyz" - as phrased perfectly by the one and only 'SNEK' hissssss...self(jokes, Kev. Don't email me.) - over-analyze players with bullshit like PER, Offensive Efficiency, Points Per Posession,... 
 
-I'm not down with bullshit. I'm not gonna show you any bullshit.
+I'm not down with bullshit. I'm not gonna show you any bullshit. All that "Advanced Stats" bullshit is just a by-product of the society we live in. This money-hungry-market-frenzy that we have going on, made us love to talk about bullshit and not see what's right fucking in front of us. "OH DUDE, JUST ADD THE POINTS AND THE REBOUNDS HE SCORED LAST GAME AND DIVIDE IT BY THE NUMBER OF OFFENSIVE POSSESSIONS THEY HAD" like are you fucking kidding me? What have we become? No wonder athletes fucking hate the media..
 
-My goal here, at SPAN, is for you - the reader/audience - to play around with some graphs and learn a few things on your own. Maybe you'll find patterns and flows in a player's career-does a player's chart seem more 'amplified' than another's? does it seem more aligator-toothed or zigzag-shaped than another's?. Or maybe you saw that a large portion of a player's chart is missing, while another's is disconnected seemingly everywhere you look. 
+My goal here, at SPAN, is for you - the reader/audience - to play around with some graphs and learn a few things on your own. Maybe you'll find patterns and flows in a player's career: does a player's chart seem more 'amplified' than another's? does it seem more aligator-toothed or zigzag-shaped than another's? Or maybe you saw that a large portion of a player's chart is missing, while another's is disconnected seemingly everywhere you look. 
 
-Tables are just so inefficient. Your eyes - and mind for that matter - can't possibly hope to extract any intangible information just by looking at tables of numbers. I'm not saying it's impossible, or even that tables are 'bad': sites like basketballmonster, or the basketball-, pro-football-, baseball-references, or even NBA.com(which is where I gather my data from!@#), all may have certain qualities about them that make them unique in their own way. Basketballmonster shows you all the ranks that you might want for your fantasy season, the references and sites like NBA.com may show you details about a player's splits or advanced stats for example, but either way, you're still looking at tables and tables and tables....
+Tables are just so inefficient. Your eyes - and mind for that matter - can't possibly hope to extract any intangible information just by looking at tables of numbers. I'm not saying it's impossible, or even that tables are 'bad': sites like basketballmonster, or the basketball-, pro-football-, baseball-references, or even NBA.com(which is where I gather my data from xD), all may have certain qualities about them that make them unique in their own way. Basketballmonster shows you all the ranks that you might want for your fantasy season, the references and sites like NBA.com may show you details about a player's splits or advanced stats for example, but either way, you're still looking at tables and tables and tables....
 
 If WE as fantasy GMs want to "invest" in certain players, it's time we took the next step
-and actually try to dive into the data ourselves. 
+and actually try to dive into the data ourselves with some real data visualization. 
 
-If WE as fantasy GMs can "predict" how a certain player might perform - similar to how the Jordan Geckos and the Jordan Belforts of our universe do what they do, time and time again - well... Wouldn't "you" want your hands on the next coca-cola of fantasy sports in your dynasty league?
+If WE as fantasy GMs can "predict" how a certain player might perform - similar to how the Gordon Geckos and the Jordan Belforts of our universe do what they do, time and time again - well... Wouldn't you want your hands on the next coca-cola or Nike of fantasy sports in your dynasty league?
 
 I sure fucking do. I'm sick and tired of losing in this stupid game, and it's time I fucking did something about it. 
 
@@ -23,9 +23,14 @@ My dream is for each athlete to have his own chart page, much like that of a sto
 
 I want Lebron's profile page to look like Apple's stock chart page on google finance.
 
-I lied, It probably won't... It'll probably be more like what you see in a heart rate monitor at a hospital, or maybe even like a seismograph. Whatever. Hopefully I - and those who are reading this - can learn a thing or two, and get some use out of it. Feel free to take and use my R code. Do as you will. This is what I did to learn R, and that's the nice thing about it - that there are people like the ones who consistenly provide insightful and detailed answers to even the dumbest and most obscure questions on stack-overflow, just to keep the community alive and strong - and maybe get a few upvotes along the way to feel just a bit more human. 
+JK, It probably won't... My skills with R and html just aren't sufficient to do such high level data visualization. It'll probably be more like what you see in a heart rate monitor at a hospital, or maybe even like a seismograph. Whatever. Hopefully I - and those who are reading this - can learn a thing or two, and get some use out of it. Feel free to take and use my R code. Do as you will. This is what I did to learn R, and that's the nice thing about R- that there are upvoted heroes out there who consistenly provide insightful and detailed answers to even the dumbest and most obscure questions on stack-overflow, just to keep the community alive and strong - and maybe get a few cheers along the way to feel just a bit more human. 
+
 
 Thanks and enjoy ~
 
 
 - BK
+
+
+P.S. My Git committing/pushing has been very erratic, so if you want to take this ride along in a sort of chronological order, as in, follow along in my order of presentation (my code does get slightly better from one page to the next, and I don't plan to go back and "update" the already written pages unless something buggy comes up with them somehow), I would suggest clicking on the 'players' tab and starting from the top with KAT's page.
+

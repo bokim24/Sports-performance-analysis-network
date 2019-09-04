@@ -1,12 +1,3 @@
----
-title: Karl Anthony Towns
-
----
-
-
-
-```{r, echo = FALSE, message = FALSE, fig.align='center'}
-
 ## don't think I actually need all these libraries, but I Can't get the script to run 
 ## if I don't actually have all of them and all of them in this exact order... 
 ## too lazy to check if this is true. If this site blows up then maybe I'll pay someone
@@ -24,14 +15,12 @@ title: Karl Anthony Towns
 ## which site gives the data that seems the least difficult to work with for my purpose,
 ## and that was NBA.com.
 
-library(RJSONIO, warn.conflicts = FALSE)
-library(jsonlite, warn.conflicts = FALSE)
-library(rjson, warn.conflicts = FALSE)
-library(RCurl, warn.conflicts = FALSE)
-library(plyr, warn.conflicts = FALSE)
-library(plotly, warn.conflicts = FALSE)
-library(dplyr, warn.conflicts = FALSE)
-library(knitr, warn.conflicts = FALSE)
+library(RJSONIO)
+library(jsonlite)
+library(rjson)
+library(RCurl)
+library(plyr)
+library(plotly)
 
 ## Kat only has three seasons. Suck me if u want me to write a loop to go thru to
 ## find all his "active years". If I end up doing this for more players, AKA this
@@ -41,19 +30,19 @@ library(knitr, warn.conflicts = FALSE)
 
 ## first we get the url
 
-kat1718url <- "http://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo
+kat1718url <- "https://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo
 =&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month
 =0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period
 =0&PlayerID=1626157&PlusMinus=N&Rank=N&Season=2017-18&SeasonSegment=&SeasonType
 =Regular+Season&ShotClockRange=&VsConference=&VsDivision="
 
-kat1617url <- "http://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo
+kat1617url <- "https://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo
 =&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month
 =0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period
 =0&PlayerID=1626157&PlusMinus=N&Rank=N&Season=2016-17&SeasonSegment=&SeasonType
 =Regular+Season&ShotClockRange=&VsConference=&VsDivision="
 
-kat1516url <- "http://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo
+kat1516url <- "https://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo
 =&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month
 =0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period
 =0&PlayerID=1626157&PlusMinus=N&Rank=N&Season=2015-16&SeasonSegment=&SeasonType
@@ -61,9 +50,9 @@ kat1516url <- "http://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo
 
 ## next we get the tables in the url via. fromJSON and make into simple dataframe
 
-kat1718json <- fromJSON(paste0(readLines(kat1718url, warn = FALSE)))
-kat1617json <- fromJSON(paste0(readLines(kat1617url, warn = FALSE)))
-kat1516json <- fromJSON(paste0(readLines(kat1516url, warn = FALSE)))
+kat1718json <- fromJSON(paste(readLines(kat1718url, warn = FALSE), collapse = ""))
+kat1617json <- fromJSON(paste(readLines(kat1617url, warn = FALSE), collapse = ""))
+kat1516json <- fromJSON(paste(readLines(kat1516url, warn = FALSE), collapse = ""))
 
 df1 <- as.data.frame(do.call("rbind", kat1718json[["resultSets"]][[1]][["rowSet"]]))
 df2 <- as.data.frame(do.call("rbind", kat1617json[["resultSets"]][[1]][["rowSet"]]))
@@ -176,12 +165,31 @@ fantasydf1516 <- data.frame("date" = betterDates3, game_number, fantasyweek3,
 
 ## now to get avg stats by fantasy week
 
+savefreq1 <- count(fantasydf1718, "fantasyweek1")
+aggdata1 <-aggregate(fantasydf1718, by=list(fantasyweek1), FUN=mean, na.rm=TRUE)
+aggdata1$number_of_games <- savefreq1$freq
+aggdata1$betterDates <- NULL
+aggdata1$game_number <- NULL
+aggdata1$Group.1 <- NULL
 
+savefreq2 <- count(fantasydf1718, "fantasyweek2")
+aggdata2 <-aggregate(fantasydf1718, by=list(fantasyweek2), FUN=mean, na.rm=TRUE)
+aggdata2$number_of_games <- savefreq2$freq
+aggdata2$betterDates <- NULL
+aggdata2$game_number <- NULL
+aggdata2$Group.1 <- NULL
 
-katptyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
-  add_lines(y = ~pts1718, name = "points 17-18") %>%
-  add_lines(y = ~pts1617, name = "points 16-17") %>%
-  add_lines(y = ~pts1516, name = "points 15-16") %>%
+savefreq3 <- count(fantasydf1718, "fantasyweek3")
+aggdata3 <-aggregate(fantasydf1718, by=list(fantasyweek3), FUN=mean, na.rm=TRUE)
+aggdata3$number_of_games <- savefreq3$freq
+aggdata3$betterDates <- NULL
+aggdata3$game_number <- NULL
+aggdata3$Group.1 <- NULL
+
+katdata <- plot_ly(trialrun, x = ~game_number) %>%
+  add_lines(y = ~pts1718, name = "points1718") %>%
+  add_lines(y = ~rebs1718, name = "rebs1718") %>%
+  add_lines(y = ~asts1718, name = "asts1718") %>%
   
   layout(
     title = "BitKat",
@@ -209,15 +217,13 @@ katptyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
     
     yaxis = list(title = "Points"))
 
-
-katptyrcomp
-
+katdata
 
 
-katrebyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
-  add_lines(y = ~rebs1718, name = "rebs 17-18") %>%
-  add_lines(y = ~rebs1617, name = "rebs 16-17") %>%
-  add_lines(y = ~rebs1516, name = "rebs 15-16") %>%
+katdata2 <- plot_ly(trialrun, x = ~game_number, width=1600, height=1000) %>%
+  add_lines(y = ~pts1718, name = "points1718") %>%
+  add_lines(y = ~pts1617, name = "points1617") %>%
+  add_lines(y = ~pts1516, name = "points1516") %>%
   
   layout(
     title = "BitKat",
@@ -243,47 +249,6 @@ katrebyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
       
       rangeslider = list(type = "game #")),
     
-    yaxis = list(title = "Rebounds"))
+    yaxis = list(title = "Points"))
 
-
-katrebyrcomp
-
-print("The above and below plots show KAT's rebounds and assists per game respectively")
-
-
-katastyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
-  add_lines(y = ~asts1718, name = "asts 17-18") %>%
-  add_lines(y = ~asts1617, name = "asts 16-17") %>%
-  add_lines(y = ~asts1516, name = "asts 15-16") %>%
-  
-  layout(
-    title = "BitKat",
-    xaxis = list(
-      rangeselector = list(
-        buttons = list(
-          list(
-            count = 2,
-            label = "2 wk",
-            step = "week",
-            stepmode = "backward"),
-          list(
-            count = 1,
-            label = "1 mo",
-            step = "month",
-            stepmode = "backward"),
-          list(
-            count = 2,
-            label = "2 mo",
-            step = "month",
-            stepmode = "backward"),
-          list(step = "all"))),
-      
-      rangeslider = list(type = "game #")),
-    
-    yaxis = list(title = "Assists"))
-
-
-katastyrcomp
-
-
-```
+katdata2
