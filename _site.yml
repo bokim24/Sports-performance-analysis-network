@@ -9,9 +9,9 @@ navbar:
       href: about.html
     - text: "Players"
       menu:
-        - text: "KAT"
+        - text: "Karl Anthony Towns"
           href: bitkat.html
         - text: "Tobias Harris"
           href: tobias.html
-        - text: "mamba"
+        - text: "Kobe Bryant"
           href: kobe.html  

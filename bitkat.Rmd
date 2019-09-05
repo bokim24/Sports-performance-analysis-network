@@ -184,7 +184,7 @@ katptyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
   add_lines(y = ~pts1516, name = "points 15-16") %>%
   
   layout(
-    title = "BitKat",
+    title = "KAT",
     xaxis = list(
       rangeselector = list(
         buttons = list(
@@ -220,7 +220,7 @@ katrebyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
   add_lines(y = ~rebs1516, name = "rebs 15-16") %>%
   
   layout(
-    title = "BitKat",
+    title = "KAT",
     xaxis = list(
       rangeselector = list(
         buttons = list(
@@ -247,17 +247,17 @@ katrebyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
 
 
 katrebyrcomp
+```
+"The above and below plots show KAT's rebounds and assists per game respectively
 
-print("The above and below plots show KAT's rebounds and assists per game respectively")
-
-
+```{r, echo = FALSE, message = FALSE, fig.align='center'}
 katastyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
   add_lines(y = ~asts1718, name = "asts 17-18") %>%
   add_lines(y = ~asts1617, name = "asts 16-17") %>%
   add_lines(y = ~asts1516, name = "asts 15-16") %>%
   
   layout(
-    title = "BitKat",
+    title = "KAT",
     xaxis = list(
       rangeselector = list(
         buttons = list(
