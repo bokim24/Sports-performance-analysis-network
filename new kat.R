@@ -1,37 +1,3 @@
----
-title: Karl Anthony Towns
-
----
-<img src= "https://mk0slamonlinensgt39k.kinstacdn.com/wp-content/uploads/2019/10/GettyImages-1175661191.jpg" style="width:30%; border:5px solid; margin-right: 23px" align="left">
-
-Karl only has 4 completed seasons of play, and all on the same team, so looking at his career gamelog
-doesn't necessarily capture his longevity and growth trend. However, looking at his yearly comparison
-slide graph of his points progression does show that there is an upward trend each year. 
-Has he yet to truly break out? We can only speculate.
-
-
-```{r, echo = FALSE, message = FALSE, fig.align='center'}
-
-## don't think I actually need all these libraries, but I Can't get the script to run 
-## if I don't actually have all of them and all of them in this exact order... 
-## too lazy to check if this is true. If this site blows up then maybe I'll pay someone
-## to look it over. Pretty sure we're only using rjson here. plotly is what we use to 
-## construct the time series, but this might change in the future. Again, if this site
-## blows up, then maybe I'll get someone to look at that too :)
-
-## This is my first real exercise posting on the web. I started out writing this script
-## for Lebron's stats, but noticed after awhile that if I want to compare a player's 
-## performance in one year to another, then this poses an issue with games missed, and
-## how we want to treat those missed games on the time series plot (do we settle with 
-## 0's on those missed games? or do we piecewise the dataset? this might be explored
-## further in the future). Also, datasets in both NBA.com and basketball.reference.com 
-## have their own pros and cons, but mostly shortcomings. It was a decision between 
-## which site gives the data that seems the least difficult to work with for my purpose,
-## and that was NBA.com.
-
-## everything I've said up till now is a lie. I took a year break making this site, and 
-## have forgotten much of why I did what. Just copying and pasting from kobe page 
-## and then changing name to KAT worked. 
 
 
 library(RJSONIO, warn.conflicts = FALSE)
@@ -189,11 +155,6 @@ KAT$CAREER_GAMES <- c(1:328)
 careerview <- plot_ly(KAT, x = ~CAREER_GAMES, y = ~PTS, type='scatter', mode='lines')
 
 careerview
-```
-
-
-```{r, echo = FALSE, message = FALSE, fig.align='center'}
-
 
 pts1819 <- as.numeric(as.character(unlist(KATgamelogz1819$PTS))) 
 pts1718 <- as.numeric(as.character(unlist(KATgamelogz1718$PTS))) 
@@ -320,5 +281,3 @@ katastyrcomp <- plot_ly(trialrun, x = ~game_number) %>%
 
 
 katastyrcomp
-
-```

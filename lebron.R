@@ -1,23 +1,3 @@
----
-title: "A Laker's Story..."
----
-<img src= "http://www.ocregister.com/wp-content/uploads/2017/12/lakers_bryant_jerseys_basketball_25069609.jpg?w=598" style="width:40%; border:5px solid; margin-right: 23px" align="left">
-
-as per NBA.com advanced stats page, "Advanced Box Score Stats only go back to the 1996-97 Season"
-
-This means that though I will not be looking at Michael Jordan's career, we still get juicy content with the
-likes of Allen Iverson, Ray Allen, Jermaine O'Neal, Steve Nash, and even Stephon Marbury,
-a talent loaded, high flyin, sharp shooting, 1996 draft class. 
-
-Oh, and did I mention Kobe Bryant? Here's me quoting wiki again, "Bill Branch, the Hornets' head scout at the time, said that the Hornets agreed to trade their draft selection at #13 to the Lakers the day before the draft. Prior to the trade agreement, the Hornets never considered drafting Bryant. During the draft, the Lakers told the Hornets whom to select minutes before the pick was made.[31] Bryant was the first guard ever drafted directly out of high school"
-
-Just wow. Not only was this man passed up by 13 other teams, he probably wasn't even considered a lottery talent by the other twelve teams that drafted before the Charlotte draft pick... Whatever the case, The Lakers had just acquired a Hall of Famer 
-
-
-```{r, echo = FALSE, message = FALSE, fig.align='center'}
-
-## Apparently Kobe's Player ID is 977. 
-## since he's not a current active player, he will not be on the current active player list obvi.
 
 
 library(RJSONIO, warn.conflicts = FALSE)
@@ -38,35 +18,44 @@ flip <- function(data) {
   new
 }
 
-szndisplay <- c("1516", "1415", "1314",
+szndisplay <- c("1819", "1718", "1617", "1516", "1415", "1314",
                 "1213", "1112", "1011", "0910", "0809",
                 "0708", "0607", "0506", "0405", "0304",
                 "0203", "0102", "0001", "9900", "9899",
                 "9798", "9697")
 
 
-getyrs20 <- c("2015-16", "2014-15", "2013-14",
-              "2012-13", "2011-12", "2010-11", "2009-10", "2008-09",
-              "2007-08", "2006-07", "2005-06", "2004-05", "2003-04",
-              "2002-03", "2001-02", "2000-01", "1999-00", "1998-99",
-              "1997-98", "1996-97")
+getyrs <- c("2018-19", "2017-18", "2016-17", "2015-16", "2014-15", "2013-14",
+            "2012-13", "2011-12", "2010-11", "2009-10", "2008-09",
+            "2007-08", "2006-07", "2005-06", "2004-05", "2003-04",
+            "2002-03", "2001-02", "2000-01", "1999-00", "1998-99",
+            "1997-98", "1996-97")
 
-grouprow <- c("2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008", "2007",
+grouprow <- c("2018", "2017",
+              "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008", "2007",
               "2006", "2005", "2004", "2003", "2002", "2001", "2000", "1999", "1998", "1997")
 
-parsebysznKBf <- paste0("http://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo",
-                      "=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType",
-                      "=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust",
-                      "=N&PerMode=Totals&Period=0&PlayerID=977&PlusMinus",
-                      "=N&Rank=N&Season=")
+gettingplayerids <- paste0("http://www.nba.com/players/active_players.json")
+
+playeridsjson <- fromJSON(paste(readLines(gettingplayerids, warn = FALSE), collapse = ""))
+
+playerinfodf <- as.data.frame(do.call("rbind", playeridsjson))
+
+## LJ player ID: 2544
+
+parsebysznLJf <- paste0("http://stats.nba.com/stats/playergamelogs?DateFrom=&DateTo",
+                        "=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType",
+                        "=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust",
+                        "=N&PerMode=Totals&Period=0&PlayerID=2544&PlusMinus",
+                        "=N&Rank=N&Season=")
 
 parsebysznl <- paste0("&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange",
                       "=&VsConference=&VsDivision=")
 
-listofURLsKB <- list()
+listofURLsLJ <- list()
 
-for(i in 1:20){
-  listofURLsKB[[i]]<- paste0(parsebysznKBf, getyrs20[i], parsebysznl)
+for(i in 1:23){
+  listofURLsLJ[[i]]<- paste0(parsebysznLJf, getyrs[i], parsebysznl)
 }
 
 
@@ -82,33 +71,59 @@ for(i in 1:20){
 ## whole script from the top (aka the libraries) everything runs smoothly.
 
 
-listofdfsKB <- list()
+listofdfsLJ <- list()
 
-for(i in 1:20){
-  jsonconvKB <- fromJSON(paste0(readLines(listofURLsKB[[i]], warn = FALSE)))
-  listofdfsKB[[i]] <- as.data.frame(do.call("rbind", jsonconvKB[["resultSets"]][[1]][["rowSet"]]))
-  categories <- c(jsonconvKB[["resultSets"]][[1]][["headers"]])
-  names(listofdfsKB[[i]]) <- c(categories)
+for(i in seq_along(getyrs)){
+  jsonconvLJ <- fromJSON(paste(readLines(paste0(parsebysznLJf, getyrs[i], parsebysznl), warn = FALSE), collapse = ""))
+  if(!length(jsonconvLJ[["resultSets"]][[1]][["rowSet"]]) == 0){
+    listofdfsLJ[[i]] <- as.data.frame(do.call("rbind", jsonconvLJ[["resultSets"]][[1]][["rowSet"]]))
+    categories <- c(jsonconvLJ[["resultSets"]][[1]][["headers"]])
+    names(listofdfsLJ[[i]]) <- c(categories)
+    
+  }
 }
 
-
-for(i in seq_along(listofdfsKB)){
-  for(j in seq_along(listofdfsKB[[1]])){
-    listofdfsKB[[i]][[j]] <-  as.character(rev(unlist(listofdfsKB[[i]][[j]])))
+for(i in seq_along(listofdfsLJ)){
+  for(j in seq_along(listofdfsLJ[[1]])){
+    listofdfsLJ[[i]][[j]] <-  as.character(rev(unlist(listofdfsLJ[[i]][[j]])))
   }
-  assign(paste0("KBszn",i), as.data.frame(listofdfsKB[[i]]))
+  assign(paste0("LJszn",i), as.data.frame(listofdfsLJ[[i]]))
+}
+
+teamsznsdisplay <- list()
+
+for(i in seq_along(listofdfsLJ)){
+  teamids <- unique(listofdfsLJ[[i]][[4]])
+  teamnames <- unique(listofdfsLJ[[i]][[5]])
+  parsebyteamidf <- paste0("http://stats.nba.com/stats/teamgamelogs?DateFrom=&DateTo",
+                           "=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType",
+                           "=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust",
+                           "=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season=")
+  parsebyteamidm <- paste0("&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&TeamID=")
+  parsebyteamidl <- paste0("&VsConference=&VsDivision=")
+  if(!length(unique(teamids)) == 1){
+    for(j in seq_along(teamids)){
+      jsonconvteamsLJ <- fromJSON(paste0(readLines(paste0(parsebyteamidf, getyrs[i], parsebyteamidm, teamids[j], parsebyteamidl), warn = FALSE)))
+      assign(paste0("LJ", i,".",j), flip(as.data.frame(do.call("rbind", jsonconvteamsLJ[["resultSets"]][[1]][["rowSet"]]))))
+      
+    }
+  }else{
+    jsonconvteamsLJ <- fromJSON(paste0(readLines(paste0(parsebyteamidf, getyrs[i], parsebyteamidm, teamids , parsebyteamidl), warn = FALSE)))
+    assign(paste0("LJ", i,".",1), flip(as.data.frame(do.call("rbind", jsonconvteamsLJ[["resultSets"]][[1]][["rowSet"]]))))
+    
+  }
 }
 
 ## Tobias played for two different teams in the 17-18 seasons, detroit and LA. lets see if we 
 ## can ask R to find this out for us
 
-ListofteamURLsKB <- list()
+ListofteamURLsLJ <- list()
 
 LALid <- "1610612747"
 parsebyteamidf <- paste0("http://stats.nba.com/stats/teamgamelogs?DateFrom=&DateTo",
-                          "=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType",
-                          "=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust",
-                          "=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season=")
+                         "=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType",
+                         "=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust",
+                         "=N&PerMode=Totals&Period=0&PlusMinus=N&Rank=N&Season=")
 parsebyteamidm <- paste0("&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&TeamID=")
 parsebyteamidl <- paste0("&VsConference=&VsDivision=")
 
@@ -175,7 +190,7 @@ KBcareerlognum <- KBcareerlog[c(1:1592), c(1, 11:65, 69:70)]
 for (i in seq_along(KBcareerlognum)){
   KBcareerlognum[[i]] <- as.numeric(unlist(KBcareerlognum[[i]]))
 }
-  
+
 
 KB <- group_by(KBcareerlognum, SEASON_DISPLAY)
 
@@ -193,4 +208,4 @@ KB$CAREER_GAMES <- c(1:1592)
 careerview <- plot_ly(KB, x = ~CAREER_GAMES, y = ~PTS, type='scatter', mode='lines')
 
 careerview
-```
+
